@@ -64,11 +64,13 @@ def predict():
     
         newX = X_scaled[-1]
         print(newX)
-
+        print('newX is above')
 
         # Make predictions using the model
         prediction = model.predict(newX)
-        print(prediction)
+        
+
+        print('prediction is', prediction)
         # Return the prediction as a JSON response
         return jsonify({'result': prediction.tolist()})
 

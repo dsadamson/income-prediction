@@ -81,7 +81,7 @@ function submitForm() {
     },
     body: JSON.stringify({ 'formData': formData }) // Wrap form data in an object with key 'formData'
   })
-  .then(response => response.text()) // Receive CSV data as text
+  .then(response => response.json()) // Receive CSV data as text
   .then(data => {
     // Process the data returned from the backend (display predictions)
     const predictionResult = data;
