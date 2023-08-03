@@ -31,7 +31,7 @@ def predict():
         #append data to income.csv
         df = df.append(data)
         #export df to csv file
-        df.to_csv('income.csv', index=False)
+        df.to_csv('df.csv', index=False)
 
         # Make predictions using the model
         prediction = model.predict(data)
