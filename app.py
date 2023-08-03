@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import pandas as pd
+import numpy as np
 import pickle
 from sklearn.preprocessing import StandardScaler,OneHotEncoder
 
@@ -30,31 +31,39 @@ def predict():
         print(data)
         #import income.csv as panda dataframe
         df = pd.read_csv('income.csv')
+
+        #drop income
+        df = df.drop(['income'], axis=1)
         #append data to income.csv
-        df = df.append(data)
+        df = pd.concat([df, data], ignore_index=True)
+        print("you reached line 35 yay!")
         
-        #Pull out categoricals
-        df_cat = df.dtypes[df.dtypes == 'object'].index.tolist() 
+        df_num = df[["age", "education_num", "hours_per_week"]]
+        df_obj = df.drop(["age", "education_num", "hours_per_week"], axis = 1)
+        df_obj = df_obj.astype(str)
         # Create a OneHotEncoder instance
         enc = OneHotEncoder(sparse_output=False)
+
         # Fit and transform the OneHotEncoder using the categorical variable list
-        encode_df = pd.DataFrame(enc.fit_transform(df[df_cat]))
+        encode_df = pd.DataFrame(enc.fit_transform(df_obj))
+
         # Add the encoded variable names to the dataframe
-        encode_df.columns = enc.get_feature_names_out(df_cat)
-        df = df.merge(encode_df,left_index=True, right_index=True)
-        #drop the unnecessaries
-        df = df.drop(df_cat,axis=1)
-        df.drop(['income_<=50K'], axis=1, inplace=True)
-        X = df.drop(["income_>50K"], axis=1).values
+        encode_df.columns = enc.get_feature_names_out()
+
+        # Merge one-hot encoded features and drop the originals
+        df = df_num.merge(encode_df,left_index=True, right_index=True)
+        X= df
         # Create a StandardScaler instances
         scaler = StandardScaler()
+
         # Fit the StandardScaler
         X_scaler = scaler.fit(X)
+
         # Scale the data
         X_scaled = X_scaler.transform(X)
-
+    
         newX = X_scaled[-1]
-
+        print(newX)
 
 
         # Make predictions using the model
