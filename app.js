@@ -82,8 +82,6 @@ function submitForm() {
     body: JSON.stringify({ 'formData': formData }) // Wrap form data in an object with key 'formData'
   })
 <<<<<<< HEAD
-  .then(response => response.json()) // Receive CSV data as text
-=======
   .then(response => response.json())
 >>>>>>> 0ec3971fcd25583fce8c991aac97bbb2ca966550
   .then(data => {
