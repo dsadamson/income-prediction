@@ -23148,3 +23148,4 @@ age,workclass,education,education_num,marital_status,occupation,relationship,rac
 31,Local-gov,Bachelors,13,Never-married,Prof-specialty,Not-in-family,White,Female,50,United-States,<=50K
 23,Private,Bachelors,13,Never-married,Prof-specialty,Not-in-family,White,Female,40,United-States,<=50K
 60,Private,10th,6,Married-civ-spouse,Transport-moving,Husband,White,Male,40,United-States,<=50K
+
