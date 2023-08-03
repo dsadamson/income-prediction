@@ -6,9 +6,9 @@ document.addEventListener("DOMContentLoaded", function () {
   // CSV URL
   const csvUrl = 'income.csv';
 
-  // Desired column headers for dropdowns (excluding "age")
+  // Desired column headers for dropdowns (excluding "age" and "education_num")
   const desiredColumns = [
-    'workclass', 'education', 'education_num',
+    'workclass', 'education',
     'marital_status', 'occupation', 'relationship', 'race', 'sex',
     'hours_per_week', 'native_country'
   ];
@@ -29,7 +29,7 @@ document.addEventListener("DOMContentLoaded", function () {
         dropdownSelect.id = columnName;
 
         const uniqueValues = [...new Set(data.map(row => row[columnName]))];
-        const sortedValues = (columnName === 'education_num' || columnName === 'hours_per_week')
+        const sortedValues = (columnName === 'hours_per_week')
           ? uniqueValues.map(value => Number(value)).sort((a, b) => a - b)
           : uniqueValues;
 
@@ -74,17 +74,21 @@ function submitForm() {
   console.log(formData);
 
   // Send the form data to the Flask endpoint
-  fetch('http://127.0.0.1:5501/predict', {
+  fetch('http://127.0.0.1:5501/predict', {  // Replace with your Flask server URL
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({ 'formData': formData }) // Wrap form data in an object with key 'formData'
   })
+<<<<<<< HEAD
   .then(response => response.json()) // Receive CSV data as text
+=======
+  .then(response => response.json())
+>>>>>>> 0ec3971fcd25583fce8c991aac97bbb2ca966550
   .then(data => {
     // Process the data returned from the backend (display predictions)
-    const predictionResult = data;
+    const predictionResult = data.result;
     showPredictionOnPage(predictionResult);
   })
   .catch(error => {
@@ -92,4 +96,3 @@ function submitForm() {
     console.error('Error sending data:', error);
   });
 }
-
