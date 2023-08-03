@@ -74,17 +74,17 @@ function submitForm() {
   console.log(formData);
 
   // Send the form data to the Flask endpoint
-  fetch('http://127.0.0.1:5501/predict', {  // Replace with your Flask server URL
+  fetch('http://127.0.0.1:5501/predict', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({ 'formData': formData }) // Wrap form data in an object with key 'formData'
   })
-  .then(response => response.json())
+  .then(response => response.text()) // Receive CSV data as text
   .then(data => {
     // Process the data returned from the backend (display predictions)
-    const predictionResult = data.result;
+    const predictionResult = data;
     showPredictionOnPage(predictionResult);
   })
   .catch(error => {
@@ -92,3 +92,4 @@ function submitForm() {
     console.error('Error sending data:', error);
   });
 }
+
