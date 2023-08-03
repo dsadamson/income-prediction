@@ -6,9 +6,9 @@ document.addEventListener("DOMContentLoaded", function () {
   // CSV URL
   const csvUrl = 'income.csv';
 
-  // Desired column headers for dropdowns (excluding "age")
+  // Desired column headers for dropdowns (excluding "age" and "education_num")
   const desiredColumns = [
-    'workclass', 'education', 'education_num',
+    'workclass', 'education',
     'marital_status', 'occupation', 'relationship', 'race', 'sex',
     'hours_per_week', 'native_country'
   ];
@@ -29,7 +29,7 @@ document.addEventListener("DOMContentLoaded", function () {
         dropdownSelect.id = columnName;
 
         const uniqueValues = [...new Set(data.map(row => row[columnName]))];
-        const sortedValues = (columnName === 'education_num' || columnName === 'hours_per_week')
+        const sortedValues = (columnName === 'hours_per_week')
           ? uniqueValues.map(value => Number(value)).sort((a, b) => a - b)
           : uniqueValues;
 
