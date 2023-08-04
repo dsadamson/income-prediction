@@ -71,8 +71,7 @@ def predict():
         # Make predictions using the model
         prediction = model.predict(newX)
 
-
-        print('prediction is', prediction)
+       
         # Return the prediction as a JSON response
         return jsonify({'result': prediction.tolist()})
 

@@ -84,8 +84,20 @@ function submitForm() {
   .then(response => response.json())
   .then(data => {
     // Process the data returned from the backend (display predictions)
-    const predictionResult = data.result;
-    showPredictionOnPage(predictionResult);
+    var predictionResult = data.result;
+    //console log the data type of predictionResult
+    console.log(typeof(predictionResult));
+    // convert predictionResult to float
+    predictionResult = parseFloat(predictionResult);
+    console.log(predictionResult);
+    console.log(typeof(predictionResult));
+    // if prediction is <.5 then return 'income >50K' else return 'income <=50K'
+    if (predictionResult > .5) {
+      Result = 'Income >50K';
+    } else {
+      Result = 'Income <=50K';
+    }
+    showPredictionOnPage(Result);
   })
   .catch(error => {
     // Handle any errors that occurred during the request
