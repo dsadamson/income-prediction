@@ -38,8 +38,8 @@ def predict():
         df = pd.concat([df, data], ignore_index=True)
         print("you reached line 35 yay!")
         
-        df_num = df[["age", "education_num", "hours_per_week"]]
-        df_obj = df.drop(["age", "education_num", "hours_per_week"], axis = 1)
+        df_num = df[["age", "hours_per_week"]]
+        df_obj = df.drop(["age", "hours_per_week"], axis = 1)
         df_obj = df_obj.astype(str)
         # Create a OneHotEncoder instance
         enc = OneHotEncoder(sparse_output=False)
@@ -62,13 +62,15 @@ def predict():
         # Scale the data
         X_scaled = X_scaler.transform(X)
     
-        newX = X_scaled[-1]
+        newX = X_scaled[-1].reshape(1, -1)
         print(newX)
         print('newX is above')
-
+     
+      
+       
         # Make predictions using the model
         prediction = model.predict(newX)
-        
+
 
         print('prediction is', prediction)
         # Return the prediction as a JSON response
